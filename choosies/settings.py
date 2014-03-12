@@ -1,12 +1,6 @@
-"""
-Django settings for choosies project.
+from unipath import Path
 
-For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
-"""
+PROJECT_DIR = Path(__file__).parent
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
@@ -21,18 +15,11 @@ ALLOWED_HOSTS = ['*']
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'wmp&4oitf(kc@)t!%zg$edi1)$g8$2!cxvr0ch&#pw$h-j@i11'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-
-# Application definition
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -41,6 +28,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'game',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,9 +43,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'choosies.urls'
 
 WSGI_APPLICATION = 'choosies.wsgi.application'
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.6/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -74,12 +59,11 @@ DATABASES = {
     default = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'))
 }
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
