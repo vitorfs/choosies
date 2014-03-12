@@ -1,19 +1,11 @@
 from unipath import Path
+import dj_database_url
 
 PROJECT_DIR = Path(__file__).parent
 
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Allow all host headers
 ALLOWED_HOSTS = ['*']
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SECRET_KEY = 'wmp&4oitf(kc@)t!%zg$edi1)$g8$2!cxvr0ch&#pw$h-j@i11'
 
@@ -56,14 +48,18 @@ USE_TZ = True
 
 DATABASES = {
   'default': dj_database_url.config(
-    default = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'))
+    default = 'sqlite:///' + PROJECT_DIR.parent.child('db.sqlite3'))
 }
 
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
+MEDIA_ROOT = PROJECT_DIR.parent.child('media')
+MEDIA_URL = '/media/'
 
+STATIC_ROOT = PROJECT_DIR.child('static')
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    PROJECT_DIR.parent.child('static'),
 )
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+TEMPLATE_DIRS = (
+    PROJECT_DIR.parent.child('templates'),
+)
