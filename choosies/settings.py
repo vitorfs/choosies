@@ -11,11 +11,6 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 
-DATABASES = {
-  'default': dj_database_url.config(
-    default = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'))
-}
-
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -74,6 +69,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATABASES = {
+  'default': dj_database_url.config(
+    default = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'))
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
