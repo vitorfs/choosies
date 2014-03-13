@@ -64,7 +64,7 @@ TEMPLATE_DIRS = (
     PROJECT_DIR.parent.child('templates'),
 )
 
-TEMPLATE_LOADERS = (
+'''TEMPLATE_LOADERS = (
     'hamlpy.template.loaders.HamlPyFilesystemLoader',
     'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
-)
+)'''

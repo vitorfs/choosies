@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Choosies</title>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+  <h1>Waiting for a match...</h1>
+  <form action="{% url 'cancel' %}" method="post">
+    <input type="hidden" id="queue-id" name="queue-id" value="{{ queue.id }}">
+    {% csrf_token %}
+    <button type="submit">Cancel</button>
+  </form>
+  <script type="text/javascript">
+    function check_queue_status () {
+      var queue_id = $('#queue-id').val();
+      $.ajax({
+        url: '/checkqueuestatus/',
+        data: { 'queue-id': queue_id },
+        type: 'get',
+        cache: false,
+        success: function (data) {
+          if (data != "-1") {
+            document.location = "/match/" + data + "/";
+          } 
+        },
+        complete: function() {
+          window.setTimeout(check_queue_status, 5000);
+        }
+      });
+    }
+    check_queue_status();
+  </script>
+</body>
+</html>
