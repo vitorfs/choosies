@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Result #{{ match.id }}</h1>
+  <h2>Winner: {{ match.winner.player.username }} - {{ match.winner.get_choice_display }}</h2>
+  {% for move in match.get_moves %}
+    <ul>
+      <li><strong>{{ move.get_choice_display }}</strong></li>
+      <li>{{ move.player.username }}</li>
+      <li>{{ move.value }}</li>
+    </ul>
+  {% endfor %}
+  <a href="{% url 'home' %}">Back</a>
+{% endblock content %}

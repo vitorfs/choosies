@@ -2,27 +2,30 @@
 
 {% block content %}
   <h1>Match</h1>
-  <p>{{ player_pick.username }} is picking odd or even...</p>
-  <input type="hidden" id="player-pick" value="{{ player_pick.id }}">
-  <input type="hidden" id="current-player" value="{{ user.id }}">
   <table border="1">
     <thead>
       <tr>
-        <th></th>
-        <th></th>
+        {% for move in match.get_moves %}
+          <th>{{ move.get_choice_display }}</th>
+        {% endfor %}
       </tr>
     </thead>
     <tbody>
       <tr>
         {% for move in match.get_moves %}
-          <td player-id="{{ move.player.id }}">
+          <td>
             {{ move.player.username }}
-            {% if move.player.id == user.id and player_pick.id == user.id %}
-              <form action="{% url 'pick' %}" method="post" id="pick-odd-or-even-form">
+            {% if move.player.id == user.id %}
+              <form action="{% url 'play' %}" method="post">
                 {% csrf_token %}
-                <input type="hidden" name="match-id" value="{{ match.id }}">
-                <input type="radio" name="pick-odd-or-even-input" value="O"> Odd
-                <input type="radio" name="pick-odd-or-even-input" value="E"> Even
+                <input type="hidden" id="match-id" name="match-id" value="{{ match.id }}">
+                <ul>
+                  {% for i in '012345' %}
+                  <li>
+                    <input type="radio" name="value" value="{{ i }}"> {{ i }}
+                  </li>
+                  {% endfor %}
+                </ul>
               </form>
             {% endif %}
           </td>
@@ -31,20 +34,42 @@
     </tbody>
   </table>
   <script type="text/javascript">
-    function check_pick_status() {
-      // todo
+    function check_result () {
+      var match_id = $("#match-id").val();
+      $.ajax({
+        url: '/check_result/',
+        data: $('form').serialize(),
+        type: 'post',
+        cache: false,
+        success: function (data) {
+          if (data != "-1") {
+            document.location = "/match/" + match_id + "/result/";
+          } 
+        },
+        complete: function() {
+          window.setTimeout(check_result, 5000);
+        }
+      });
     }
 
     $(function () {
-      $("input[name=pick-odd-or-even-input]").click(function () {
+      $("input[name=value]").click(function () {
+        var match_id = $("#match-id").val();
         $.ajax({
-          url: '/pick/',
-          data: $('#pick-odd-or-even-form').serialize(),
+          url: '/play/',
+          data: $('form').serialize(),
           type: 'post',
           cache: false,
+          beforeSend: function () {
+            $('input[name=value]').prop('disabled', true);
+          },
           success: function (data) {
-            $("#pick-odd-or-even-form").after(data);
-            $("#pick-odd-or-even-form").remove();
+            if (data != "-1") {
+              document.location = "/match/" + match_id + "/result/";
+            }
+            else {
+              check_result();
+            }
           }
         });
       });

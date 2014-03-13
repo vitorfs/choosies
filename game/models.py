@@ -23,9 +23,22 @@ class Queue(models.Model):
         verbose_name_plural = "Queues"
         ordering = ("-date",)
 
+
 class Match(models.Model):
+    PICKING = 'P'
+    RUNNING = 'R'
+    CANCELED = 'C'
+    FINISHED = 'F'
+    STATUS = (
+        (PICKING, 'Picking'),
+        (RUNNING, 'Running'),
+        (CANCELED, 'Canceled'),
+        (FINISHED, 'Finished')
+        )
     date = models.DateTimeField(auto_now_add=True)
     queue = models.ForeignKey(Queue)
+    status = models.CharField(max_length=1, choices=STATUS, default=PICKING)
+    winner = models.ForeignKey('Move', null=True, related_name='winner')
 
     def get_winner(self):
         moves = Move.objects.filter(match__id=self.id)
@@ -33,15 +46,15 @@ class Match(models.Model):
         even = moves.filter(choice=Move.EVEN).get()
 
         if (odd.value + even.value) % 2 == 0:
-            return odd.player
+            return even
         else:
-            return even.player
+            return odd
 
     def get_moves(self):
         moves = Move.objects.filter(match__id=self.id) 
         return moves
 
-    def is_on_match(self, user):
+    def user_is_on_match(self, user):
         user_is_on_match = False
         for move in self.get_moves():
             if user.id == move.player.id:
@@ -59,6 +72,7 @@ class Move(models.Model):
         )
 
     player = models.ForeignKey(User)
-    choice = models.CharField(max_length=1, choices=CHOICES)
-    value = models.IntegerField()
     match = models.ForeignKey(Match)
+    choice = models.CharField(max_length=1, choices=CHOICES)
+    value = models.IntegerField(null=True)
+    pick_choice = models.BooleanField()

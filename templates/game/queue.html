@@ -9,7 +9,6 @@
   </form>
   <script type="text/javascript">
     function check_queue_status () {
-      var queue_id = $('#queue-id').val();
       $.ajax({
         url: '/check_queue/',
         data: $('form').serialize(),
@@ -17,7 +16,7 @@
         cache: false,
         success: function (data) {
           if (data != "-1") {
-            document.location = "/match/" + data + "/";
+            document.location = "/match/" + data + "/picking/";
           } 
         },
         complete: function() {

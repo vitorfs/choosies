@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Match</h1>
+  {% for move in match.get_moves %}
+    {% if move.pick_choice %}
+      <p class="picking-message">{{ move.player.username }} is picking odd or even...</p>
+    {% endif %}
+  {% endfor %}
+  <table border="1">
+    <tbody>
+      <tr>
+        {% for move in match.get_moves %}
+          <td>
+            {{ move.player.username }}
+            {% if move.player.id == user.id and move.pick_choice %}
+              <form action="{% url 'pick' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="match-id" name="match-id" value="{{ match.id }}">
+                <input type="radio" name="pick-input" value="O"> Odd
+                <input type="radio" name="pick-input" value="E"> Even
+              </form>
+            {% else %}
+              <form action="{% url 'check_pick_status' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="match-id" name="match-id" value="{{ match.id }}">
+              </form>
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+  <script type="text/javascript">
+    function check_pick_status () {
+      $.ajax({
+        url: '/check_pick/',
+        data: $('form').serialize(),
+        type: 'post',
+        cache: false,
+        success: function (data) {
+          if (data != "-1") {
+            document.location = "/match/" + data + "/";
+          } 
+        },
+        complete: function() {
+          window.setTimeout(check_pick_status, 5000);
+        }
+      });
+    }
+    check_pick_status();
+
+    $(function () {
+      $("input[name=pick-input]").click(function () {
+        var match_id = $("#match-id").val();
+        $.ajax({
+          url: '/pick/',
+          data: $('form').serialize(),
+          type: 'post',
+          cache: false,
+          success: function (data) {
+            document.location = "/match/" + match_id + "/";
+          }
+        });
+      });
+    });
+  </script>
+{% endblock content %}
