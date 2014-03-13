@@ -5,10 +5,15 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from game.models import Queue, Match, Move
+from auth.forms import SignUpForm
 
 def home(request):
-    context = RequestContext(request)
-    return render_to_response('game/home.html', context)
+    if request.user.is_authenticated():
+        context = RequestContext(request)
+        return render_to_response('game/home.html', context)
+    else:
+        context = RequestContext(request,{'form': SignUpForm()})
+        return render_to_response('auth/signup.html', context)
 
 def queue(request):
     try:

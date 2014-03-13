@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <a href="{% url 'signin' %}">Sign in</a>
+  <h1>Sign up for Choosies</h1>
+  <form action="{% url 'signup' %}" method="post">
+    {% csrf_token %}
+    <div>
+      <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+      {{ form.username }}
+      {{ form.username.errors }}
+    </div>
+    <div>
+      <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+      {{ form.password }}
+      {{ form.password.errors }}
+    </div>
+    <div>
+      <label for="{{ form.confirm_password.id_for_label }}">{{ form.confirm_password.label }}</label>
+      {{ form.confirm_password }}
+      {{ form.confirm_password.errors }}
+    </div>
+    <div>
+      <button type="submit" class="btn btn-success btn-large">Create an account</button>
+    </div>
+  </form>
+{% endblock content %}

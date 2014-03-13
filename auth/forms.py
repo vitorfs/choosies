@@ -26,7 +26,6 @@ def UniqueUsernameIgnoreCaseValidator(value):
 class SignUpForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput(), label="Confirm your password")
-    email = forms.CharField(required=True)
 
     class Meta:
         model = User
