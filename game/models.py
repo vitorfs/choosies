@@ -18,6 +18,10 @@ class Queue(models.Model):
     matched_player = models.ForeignKey(User, null=True, related_name="matched_player")
     status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
 
+    class Meta:
+        verbose_name = "Queue"
+        verbose_name_plural = "Queues"
+        ordering = ("-date",)
 
 class Match(models.Model):
     date = models.DateTimeField(auto_now_add=True)
