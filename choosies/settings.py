@@ -65,8 +65,6 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'hamlpy.template.loaders.HamlPyFilesystemLoader',
-        'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
-    )),   
+    'hamlpy.template.loaders.HamlPyFilesystemLoader',
+    'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
 )
