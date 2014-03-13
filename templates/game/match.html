@@ -1,10 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Choosies</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
   <h1>Match</h1>
-</body>
-</html>
+  <p>{{ player_pick.username }} is picking odd or even...</p>
+  <input type="hidden" id="player-pick" value="{{ player_pick.id }}">
+  <input type="hidden" id="current-player" value="{{ user.id }}">
+  <table border="1">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for move in match.get_moves %}
+          <td player-id="{{ move.player.id }}">
+            {{ move.player.username }}
+            {% if move.player.id == user.id and player_pick.id == user.id %}
+              <form action="{% url 'pick' %}" method="post" id="pick-odd-or-even-form">
+                {% csrf_token %}
+                <input type="hidden" name="match-id" value="{{ match.id }}">
+                <input type="radio" name="pick-odd-or-even-input" value="O"> Odd
+                <input type="radio" name="pick-odd-or-even-input" value="E"> Even
+              </form>
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+  <script type="text/javascript">
+    function check_pick_status() {
+      // todo
+    }
+
+    $(function () {
+      $("input[name=pick-odd-or-even-input]").click(function () {
+        $.ajax({
+          url: '/pick/',
+          data: $('#pick-odd-or-even-form').serialize(),
+          type: 'post',
+          cache: false,
+          success: function (data) {
+            $("#pick-odd-or-even-form").after(data);
+            $("#pick-odd-or-even-form").remove();
+          }
+        });
+      });
+    });
+  </script>
+{% endblock content %}

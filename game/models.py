@@ -37,6 +37,18 @@ class Match(models.Model):
         else:
             return even.player
 
+    def get_moves(self):
+        moves = Move.objects.filter(match__id=self.id) 
+        return moves
+
+    def is_on_match(self, user):
+        user_is_on_match = False
+        for move in self.get_moves():
+            if user.id == move.player.id:
+                user_is_on_match = True
+                break
+        return user_is_on_match
+
 
 class Move(models.Model):
     ODD = 'O'
