@@ -15,7 +15,7 @@ class Queue(models.Model):
 
     date = models.DateTimeField(auto_now_add=True)
     player = models.ForeignKey(User)
-    matched_player = models.ForeignKey(User, null=True)
+    matched_player = models.ForeignKey(User, null=True, related_name="matched_player")
     status = models.CharField(max_length=1, choices=STATUS, default=PENDING)
 
 
