@@ -63,3 +63,10 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     PROJECT_DIR.parent.child('templates'),
 )
+
+TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', (
+        'hamlpy.template.loaders.HamlPyFilesystemLoader',
+        'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
+    )),   
+)

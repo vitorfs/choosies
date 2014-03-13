@@ -3,4 +3,4 @@ from django.template import RequestContext
 
 def home(request):
   context = RequestContext(request)
-  return render_to_response('game/index.html', context)
+  return render_to_response('game/index.hamlpy', context)
