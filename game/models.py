@@ -21,7 +21,7 @@ class Queue(models.Model):
     class Meta:
         verbose_name = "Queue"
         verbose_name_plural = "Queues"
-        ordering = ("-date",)
+        ordering = ("date",)
 
 
 class Match(models.Model):

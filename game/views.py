@@ -21,7 +21,7 @@ def home(request):
 @login_required
 def queue(request):
     try:
-        queue = Queue.objects.filter(status=Queue.PENDING)[:1].get()
+        queue = Queue.objects.filter(status=Queue.PENDING).exclude(player=request.user)[:1].get()
         queue.status = Queue.MATCHED
         queue.matched_player = request.user
         queue.save()
