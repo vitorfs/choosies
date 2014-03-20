@@ -188,14 +188,20 @@ def check_result(request):
 @login_required
 def rank(request):
     users = User.objects.all()
-    matches = Match.objects.filter(status=Match.FINISHED)
+    matches = Match.objects.filter(status=Match.FINISHED).order_by('id')
     rank_users = []
     for user in users:
         wins = 0
+        consecutive_wins = 0
+        consecutive_wins_list = []
         matches_played = 0
         for match in matches:
             if match.winner.player.id == user.id:
                 wins = wins + 1
+                consecutive_wins = consecutive_wins + 1
+            else:
+                consecutive_wins_list.append(consecutive_wins)
+                consecutive_wins = 0
             for move in match.get_moves():
                 if user.id == move.player.id:
                    matches_played = matches_played + 1
@@ -205,6 +211,8 @@ def rank(request):
             user.defeats = matches_played - wins
             user.points = user.wins - user.defeats
             user.matches_played = matches_played
+            consecutive_wins_list = sorted(consecutive_wins_list, key=int, reverse=True)
+            user.winning_streak = consecutive_wins_list[0]
             win_ratio = (float(wins)/float(matches_played)) * 100.0
             user.win_ratio = "{:2.2f}".format(win_ratio)
             rank_users.append(user)
