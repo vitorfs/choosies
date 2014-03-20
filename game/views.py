@@ -199,7 +199,7 @@ def rank(request):
             if match.winner.player.id == user.id:
                 wins = wins + 1
                 consecutive_wins = consecutive_wins + 1
-            elif match.get_moves()[0].player.id == user.id or match.get_moves()[1].player.id == user.id:
+            elif match.user_is_on_match(user):
                 consecutive_wins_list.append(consecutive_wins)
                 consecutive_wins = 0
             for move in match.get_moves():
