@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <a href="{% url 'home' %}">Home</a>
+  &bullet;
   <a href="{% url 'rank' %}">Rank</a>
+  &bullet;
   <a href="{% url 'signout' %}">Sign out</a>
   <h1>Rank</h1>
   <table border="1">
@@ -11,6 +14,7 @@
         <th>Player</th>
         <th>Points</th>
         <th>Wins</th>
+        <th>Defeats</th>
         <th>Matches Played</th>
         <th>Win Ratio</th>
       </tr>
@@ -22,12 +26,11 @@
           <td>{{ user.username }}</td>
           <td>{{ user.points }}</td>
           <td>{{ user.wins }}</td>
+          <td>{{ user.defeats }}</td>
           <td>{{ user.matches_played }}</td>
           <td>{{ user.win_ratio }}%</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
-  <br>
-  <a href="{% url 'home' %}">Back</a>
 {% endblock content %}

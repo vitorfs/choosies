@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <a href="{% url 'home' %}">Home</a>
+  &bullet;
   <a href="{% url 'rank' %}">Rank</a>
+  &bullet;
   <a href="{% url 'signout' %}">Sign out</a>
   <h1>Choosies</h1>
   <p>Signed in as <strong>{{ user.username }}</strong></p>
