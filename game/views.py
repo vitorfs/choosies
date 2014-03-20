@@ -201,7 +201,7 @@ def rank(request):
                    matches_played = matches_played + 1
                    break 
         if matches_played > 0:
-            user.points = matches_played - (matches_played - wins)
+            user.points = wins - (matches_played - wins)
             user.wins = wins
             user.matches_played = matches_played
             win_ratio = (float(wins)/float(matches_played)) * 100.0
