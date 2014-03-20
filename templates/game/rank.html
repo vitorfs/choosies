@@ -7,7 +7,9 @@
   <table border="1">
     <thead>
       <tr>
+        <th>#</th>
         <th>Player</th>
+        <th>Points</th>
         <th>Wins</th>
         <th>Matches Played</th>
         <th>Win Ratio</th>
@@ -16,7 +18,9 @@
     <tbody>
       {% for user in users %}
         <tr>
+          <td>{{ forloop.counter }}</td>
           <td>{{ user.username }}</td>
+          <td>{{ user.points }}</td>
           <td>{{ user.wins }}</td>
           <td>{{ user.matches_played }}</td>
           <td>{{ user.win_ratio }}%</td>
