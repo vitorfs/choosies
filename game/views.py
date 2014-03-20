@@ -206,6 +206,6 @@ def rank(request):
             user.win_ratio = (float(wins)/float(matches_played)) * 100.0
             rank_users.append(user)
     if rank_users:
-        rank_users.sort(key=lambda u: u.wins, reverse=True)
+        rank_users.sort(key=lambda u: u.win_ratio, reverse=True)
     context = RequestContext(request,{'users': rank_users})
     return render_to_response('game/rank.html', context)
