@@ -9,6 +9,8 @@
       <tr>
         <th>Player</th>
         <th>Wins</th>
+        <th>Matches Played</th>
+        <th>Win Ratio</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +18,8 @@
         <tr>
           <td>{{ user.username }}</td>
           <td>{{ user.wins }}</td>
+          <td>{{ user.matches_played }}</td>
+          <td>{{ user.win_ratio }}%</td>
         </tr>
       {% endfor %}
     </tbody>

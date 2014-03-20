@@ -192,11 +192,18 @@ def rank(request):
     rank_users = []
     for user in users:
         wins = 0
+        matches_played = 0
         for match in matches:
             if match.winner.player.id == user.id:
                 wins = wins + 1
-        if wins > 0:
+            for move in match.get_moves():
+                if user.id == move.player.id:
+                   matches_played = matches_played + 1
+                   break 
+        if matches_played > 0:
             user.wins = wins
+            user.matches_played = matches_played
+            user.win_ratio = (float(wins)/float(matches_played)) * 100.0
             rank_users.append(user)
     if rank_users:
         rank_users.sort(key=lambda u: u.wins, reverse=True)
