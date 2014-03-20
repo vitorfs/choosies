@@ -203,9 +203,11 @@ def rank(request):
         if matches_played > 0:
             user.wins = wins
             user.matches_played = matches_played
-            user.win_ratio = (float(wins)/float(matches_played)) * 100.0
+            win_ratio = (float(wins)/float(matches_played)) * 100.0
+            user.win_ratio = "{:2.2f}".format(win_ratio)
             rank_users.append(user)
     if rank_users:
         rank_users.sort(key=lambda u: u.win_ratio, reverse=True)
+        rank_users.sort(key=lambda u: u.wins, reverse=True)
     context = RequestContext(request,{'users': rank_users})
     return render_to_response('game/rank.html', context)
