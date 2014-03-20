@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <a href="{% url 'rank' %}">Rank</a>
+  <a href="{% url 'signout' %}">Sign out</a>
+  <h1>Rank</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>Wins</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.wins }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  <a href="{% url 'home' %}">Back</a>
+{% endblock content %}

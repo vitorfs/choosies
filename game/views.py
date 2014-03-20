@@ -184,3 +184,21 @@ def check_result(request):
             return HttpResponse('-1')
     except:
         return HttpResponseBadRequest()
+
+@login_required
+def rank(request):
+    users = User.objects.all()
+    matches = Match.objects.filter(status=Match.FINISHED)
+    rank_users = []
+    for user in users:
+        wins = 0
+        for match in matches:
+            if match.winner.player.id == user.id:
+                wins = wins + 1
+        if wins > 0:
+            user.wins = wins
+            rank_users.append(user)
+    if rank_users:
+        rank_users.sort(key=lambda u: u.wins, reverse=True)
+    context = RequestContext(request,{'users': rank_users})
+    return render_to_response('game/rank.html', context)
