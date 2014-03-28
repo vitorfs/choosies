@@ -49,7 +49,8 @@ USE_TZ = True
 
 DATABASES = {
   'default': dj_database_url.config(
-    default = 'sqlite:///' + PROJECT_DIR.parent.child('db.sqlite3'))
+    #default = 'sqlite:///' + PROJECT_DIR.parent.child('db.sqlite3'))
+    default = 'postgres://abbijsuirsqony:wUi--PrkHi4ZWA6Onbk_9MLi4p@ec2-54-204-38-16.compute-1.amazonaws.com:5432/deu62reg1et9eb')
 }
 
 MEDIA_ROOT = PROJECT_DIR.parent.child('media')
