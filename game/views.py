@@ -212,7 +212,9 @@ def rank(request):
             user.points = user.wins - user.defeats
             user.matches_played = matches_played
             consecutive_wins_list = sorted(consecutive_wins_list, key=int, reverse=True)
-            user.winning_streak = consecutive_wins_list[0]
+            user.winning_streak = 0
+            if len(consecutive_wins_list) > 0:
+                user.winning_streak = consecutive_wins_list[0]
             win_ratio = (float(wins)/float(matches_played)) * 100.0
             user.win_ratio = "{:2.2f}".format(win_ratio)
             rank_users.append(user)

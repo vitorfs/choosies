@@ -11,7 +11,7 @@ SECRET_KEY = 'wmp&4oitf(kc@)t!%zg$edi1)$g8$2!cxvr0ch&#pw$h-j@i11'
 
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -65,7 +65,4 @@ TEMPLATE_DIRS = (
     PROJECT_DIR.parent.child('templates'),
 )
 
-'''TEMPLATE_LOADERS = (
-    'hamlpy.template.loaders.HamlPyFilesystemLoader',
-    'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
-)'''
+LOGIN_URL = '/signin/'
