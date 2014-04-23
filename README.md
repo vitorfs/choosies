@@ -1,4 +1,4 @@
-choosies
+Choosies
 ========
 
 Sync Database
