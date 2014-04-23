@@ -1,0 +1,56 @@
+@import "bourbon"
+@import "reset.css"
+
+@import url(http://fonts.googleapis.com/css?family=Press+Start+2P)
+
+$blue: #36f
+$red: #e52
+$white: #fff
+
+$pixel: "Press Start 2P", sans-serif
+
+body
+  color: rgba(#000, .8)
+  font:
+    family: $pixel
+    size: 10px
+  line-height: 1.5
+
+.site-top
+  background-color: $white
+  padding: 2em
+  text-align: center
+
+h1
+  font:
+    size: 4em
+
+.game-board
+
+  .player-one,
+  .player-two
+    bottom: 0
+    padding: 4em
+    position: absolute
+    text-align: center
+    top: 115px
+    width: 50%
+    +box-sizing(border-box)
+
+  .player-one
+    background-color: $blue
+    left: 0
+
+  .player-two
+    background-color: $red
+    right: 0
+
+  .hand
+    background: url("/static/img/hands.svg") no-repeat left top transparent
+    display: inline-block
+    height: 120px
+    width: 200px
+
+    @for $state from 0 through 5
+      &.number-#{$state}
+        background-position: ($state * -230px) top

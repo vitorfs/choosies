@@ -11,12 +11,8 @@ import random
 from game.decorators import ajax_required, user_is_on_match
 
 def home(request):
-    if request.user.is_authenticated():
-        context = RequestContext(request)
-        return render_to_response('game/home.html', context)
-    else:
-        context = RequestContext(request,{'form': SignUpForm()})
-        return render_to_response('auth/signup.html', context)
+    context = RequestContext(request)
+    return render_to_response('game/index.html', context)
 
 @login_required
 def queue(request):
