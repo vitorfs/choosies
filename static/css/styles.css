@@ -10,9 +10,14 @@ body {
   background-color: white;
   padding: 2em;
   text-align: center; }
-
-h1 {
-  font-size: 4em; }
+  .site-top h1,
+  .site-top p {
+    text-transform: uppercase; }
+  .site-top h1 {
+    font-size: 3em;
+    margin-bottom: 0.3em; }
+  .site-top p {
+    font-size: 1.2em; }
 
 .game-board .player-one,
 .game-board .player-two {
@@ -20,7 +25,7 @@ h1 {
   padding: 4em;
   position: absolute;
   text-align: center;
-  top: 115px;
+  top: 112px;
   width: 50%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -48,3 +53,9 @@ h1 {
     background-position: -920px top; }
   .game-board .hand.number-5 {
     background-position: -1150px top; }
+.game-board .player-two .hand {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); }
