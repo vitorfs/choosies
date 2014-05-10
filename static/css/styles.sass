@@ -5,16 +5,33 @@
 
 $blue: #36f
 $red: #e52
+$black: #000
 $white: #fff
 
 $pixel: "Press Start 2P", sans-serif
 
++keyframes(shake)
+  0%
+    +transform(rotate(0))
+  50%
+    +transform(rotate(10deg))
+  100%
+    +transform(rotate(-10deg))
+
+
 body
-  color: rgba(#000, .8)
+  color: rgba($black, .8)
   font:
     family: $pixel
     size: 10px
   line-height: 1.5
+
+button,
+input,
+textarea
+  font:
+    family: $pixel
+    size: 1em
 
 .site-top
   background-color: $white
@@ -34,6 +51,38 @@ body
 
 .game-board
 
+  .numbers
+    background-color: $white
+    left: 50%
+    padding: 3em
+    position: fixed
+    text-align: center
+    top: 50%
+    z-index: 2
+    +transform(translate(-50%, -50%))
+
+    h3
+      font-size: 1.8em
+      margin-bottom: 1em
+      text-transform: uppercase
+
+    li
+      display: inline-block
+
+    button
+      background: none
+      border: 4px solid $black
+      cursor: pointer
+      font-size: 2em
+      padding: .5em
+      +appearance(none)
+
+      &:hover,
+      &:focus
+        background-color: $black
+        color: $white
+        +animation(shake 500ms ease-in-out infinite alternate)
+
   .player-one,
   .player-two
     bottom: 0
@@ -42,6 +91,7 @@ body
     text-align: center
     top: 112px
     width: 50%
+    z-index: 0
     +box-sizing(border-box)
 
   .player-one
@@ -52,15 +102,23 @@ body
     background-color: $red
     right: 0
 
+  h2
+    font-size: 2em
+    margin-bottom: 3em
+
   .hand
-    background: url("/static/img/hands.svg") no-repeat left top transparent
+    background: url("/static/img/hands-left.svg") no-repeat left top transparent
     display: inline-block
     height: 120px
     width: 200px
+    +animation(shake 500ms ease-in-out infinite alternate)
+    +transform-origin(left center)
 
     @for $state from 0 through 5
       &.number-#{$state}
         background-position: ($state * -230px) top
 
   .player-two .hand
-    +transform(rotate(180deg))
+    background-image: url("/static/img/hands-right.svg")
+    +animation(shake 500ms ease-in-out infinite alternate)
+    +transform-origin(right center)
